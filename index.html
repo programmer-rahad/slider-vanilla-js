@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Custom Slider ( Monday, 13 September 2021 )</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      .container {
+        max-width: 1170px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      section#slider__section {
+        padding: 70px 0;
+      }
+
+      section#slider__section .slider-items {
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+      }
+
+      section#slider__section .slider-items .slider-item {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transform: translateX(0%);
+        transform: translateX(0%);
+      }
+
+      section#slider__section .slider-items .slider-item img {
+        width: 100%;
+        border-radius: 5px;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      section#slider__section .next,
+      section#slider__section .prev {
+        border: 1px solid;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: cursive;
+        letter-spacing: 1.5px;
+        border-radius: 4px;
+      }
+
+      section#slider__section .next:hover,
+      section#slider__section .prev:hover {
+        background-color: #000;
+        color: #fff;
+      }
+      .text-center {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="slider__section">
+      <div class="container">
+        <div class="slider-items">
+          <div class="slider-item">
+            <img
+              src="https://images.unsplash.com/photo-1469521669194-babb45599def"
+              alt=""
+            />
+          </div>
+          <div class="slider-item">
+            <img
+              src="https://images.unsplash.com/photo-1433086966358-54859d0ed716"
+              alt=""
+            />
+          </div>
+          <div class="slider-item">
+            <img
+              src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e"
+              alt=""
+            />
+          </div>
+          <div class="slider-item">
+            <img
+              src="https://images.unsplash.com/photo-1473654729523-203e25dfda10"
+              alt=""
+            />
+          </div>
+        </div>
+        <br />
+        <div class="text-center">
+          <span class="prev">Prev</span>
+          <span class="next">Next</span>
+        </div>
+      </div>
+    </section>
+    <script>
+      !(function () {
+        // Simple Slider
+        const sliderItems = document.querySelectorAll(
+          "#slider__section .slider-items .slider-item"
+        );
+        const prevButton = document.querySelector("#slider__section span.prev");
+        const nextButton = document.querySelector("#slider__section span.next");
+        let left = 0;
+        for (let i = 0; i < sliderItems.length; i++) {
+          const item = sliderItems[i];
+          item.style.left = left + "%";
+          left += 100;
+        }
+
+        let translateX = 0;
+        const maxTranslateX = sliderItems.length - 1 + "00";
+
+        function nextSlide() {
+          if (translateX === -maxTranslateX) {
+            translateX = 0;
+            for (let i = 0; i < sliderItems.length; i++) {
+              sliderItems[i].style.transform = `translateX(${translateX}%)`;
+            }
+            return;
+          }
+          translateX -= 100;
+          for (let i = 0; i < sliderItems.length; i++) {
+            sliderItems[i].style.transform = `translateX(${translateX}%)`;
+          }
+        }
+
+        function prevSlide() {
+          if (!translateX) {
+            translateX = -maxTranslateX;
+            for (let i = 0; i < sliderItems.length; i++) {
+              sliderItems[i].style.transform = `translateX(${translateX}%)`;
+            }
+            return;
+          }
+          translateX += 100;
+          for (let i = 0; i < sliderItems.length; i++) {
+            sliderItems[i].style.transform = `translateX(${translateX}%)`;
+          }
+        }
+        prevButton.addEventListener("click", prevSlide);
+        nextButton.addEventListener("click", nextSlide);
+      })();
+    </script>
+  </body>
+</html>
